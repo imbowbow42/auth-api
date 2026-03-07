@@ -286,9 +286,7 @@ http://localhost:3000
 
 Typical deployment options:
 
-* Azure App Service (recommended)
-* Azure Container Apps
-* Azure Kubernetes Service
+* Azure App Service 
 
 Basic deployment flow:
 

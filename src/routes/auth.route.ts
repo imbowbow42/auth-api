@@ -4,7 +4,7 @@ import { authMiddleware } from '../middlewares/auth.middleware.js';
 
 const router = Router();
 
-router.post('/login', authMiddleware, authController.login);
-router.post('/register', authMiddleware, authController.register);
+router.post('/login', authController.login);
+router.post('/register', authController.register);
 
 export default router;

@@ -20,12 +20,31 @@ export const register = async (req: Request, res: Response) => {
         res.status(400).json({ error: error.message });
     }
 };
+export const googleLogin = async (req: Request, res: Response) => {
 
-export const profile = async (req: AuthRequest, res: Response) => {
     try {
-        const result = await authService.profileService(req.user);
-        res.status(200).json(result);
+
+        const { idToken } = req.body
+
+        if (!idToken) {
+            return res.status(400).json({
+                message: 'Google token required'
+            })
+        }
+
+        const result = await authService.googleLoginService(idToken)
+
+        return res.json({
+            message: 'Google login successful',
+            token: result.token
+        })
+
     } catch (error: any) {
-        res.status(400).json({ error: error.message });
+
+        return res.status(401).json({
+            message: error.message
+        })
+
     }
-};
+}
+

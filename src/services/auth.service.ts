@@ -1,5 +1,5 @@
-
 import { userRepository } from '../repositories/user.repository.js';
+import { AppError } from '../utils/AppError.js';
 import { hashPassword, comparePassword } from '../utils/hash.js';
 import { generateToken } from '../utils/jwt.js';
 import { verifyGoogleToken } from '../utils/google.js'
@@ -8,12 +8,12 @@ import { verifyGoogleToken } from '../utils/google.js'
 export const loginService = async (data: any) => {
     const user = userRepository.findByEmail(data.email);
     if (!user) {
-        throw new Error('Invalid email or password');
+        throw new AppError('Invalid email or password', 401);
     }
     if (user.password) {
         const isPasswordValid = await comparePassword(data.password, user.password);
         if (!isPasswordValid) {
-            throw new Error('Invalid email or password');
+            throw new AppError('Invalid email or password', 401);
         }
     }
 
@@ -26,7 +26,7 @@ export const loginService = async (data: any) => {
 export const registerService = async (data: any) => {
     const existingUser = userRepository.findByEmail(data.email);
     if (existingUser) {
-        throw new Error('Email already in use');
+        throw new AppError('Email already in use', 400);
     }
 
     const hashedPassword = await hashPassword(data.password);
@@ -49,7 +49,7 @@ export const googleLoginService = async (idToken: string) => {
     const { sub, email, name } = payload
 
     if (!email) {
-        throw new Error('Google account has no email')
+        throw new AppError('Google account has no email', 400)
     }
 
     // Check if user already exists

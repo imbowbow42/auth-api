@@ -1,31 +1,47 @@
 // Simulated database table
 // Later this will be Azure SQL
-
+import { container, database } from '../config/cosmos.js'
 interface User {
-    id: number
+    userId: string
     username: string
     email: string
     password?: string // hashed password
     googleId?: string
 }
-
-let users: User[] = []
-let idCounter = 1
-
 export const userRepository = {
-    findByEmail: (email: string) => {
-        return users.find(user => user.email === email)
+    findByEmail: async (email: string) => {
+        const query = {
+            query: 'SELECT TOP 1 * FROM c WHERE c.email = @email',
+            parameters: [
+                {
+                    name: '@email',
+                    value: email
+                }
+            ]
+        }
+        const { resources: users } = await container.items.query(query, { maxItemCount: 1 }).fetchAll()
+        return users[0]
     },
-    findByGoogleId: (googleId: string) => {
-        return users.find(user => user.googleId === googleId)
+    findByGoogleId: async (googleId: string) => {
+        const query = {
+            query: 'SELECT TOP 1 * FROM c WHERE c.googleId = @googleId',
+            parameters: [
+                {
+                    name: '@googleId',
+                    value: googleId
+                }
+            ]
+        }
+        const { resources: users } = await container.items.query(query, { maxItemCount: 1 }).fetchAll()
+        return users[0]
     },
 
-    create: (data: Omit<User, 'id'>) => {
+    create: async (data: Omit<User, 'userId'>) => {
         const newUser: User = {
-            id: idCounter++,
+            userId: crypto.randomUUID(),
             ...data
         }
-        users.push(newUser)
-        return newUser
+        const { resource } = await container.items.create(newUser)
+        return resource
     }
 }

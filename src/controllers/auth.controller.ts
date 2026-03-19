@@ -38,7 +38,8 @@ export const googleLogin = async (req: Request, res: Response, next: NextFunctio
 
         return res.json({
             message: 'Google login successful',
-            token: result.token
+            accessToken: result.accessToken,
+            refreshToken: result.refreshToken
         })
 
     } catch (error: any) {

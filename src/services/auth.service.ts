@@ -1,7 +1,7 @@
 import { userRepository } from '../repositories/user.repository.js';
 import { AppError } from '../utils/AppError.js';
 import { hashPassword, comparePassword } from '../utils/hash.js';
-import { generateToken } from '../utils/jwt.js';
+import { generateAccessToken, generateRefreshToken } from '../utils/jwt.js';
 import { verifyGoogleToken } from '../utils/google.js'
 
 
@@ -19,7 +19,8 @@ export const loginService = async (data: any) => {
 
     return {
         message: 'Login successful',
-        token: generateToken({ userId: user.id, email: user.email })
+        accessToken: generateAccessToken({ userId: user.id, email: user.email }),
+        refreshToken: generateRefreshToken({ userId: user.id, email: user.email })
     };
 };
 
@@ -38,7 +39,9 @@ export const registerService = async (data: any) => {
 
     return {
         message: 'User registered successfully',
-        user: { id: newUser.id, email: newUser.email, username: newUser.username }
+        user: { id: newUser.id, email: newUser.email, username: newUser.username },
+        accessToken: generateAccessToken({ userId: newUser.id, email: newUser.email }),
+        refreshToken: generateRefreshToken({ userId: newUser.id, email: newUser.email })
     };
 };
 
@@ -65,10 +68,14 @@ export const googleLoginService = async (idToken: string) => {
     }
 
     // Generate YOUR system token
-    const token = generateToken({
+    const accessToken = generateAccessToken({
+        userId: user.id,
+        email: user.email
+    })
+    const refreshToken = generateRefreshToken({
         userId: user.id,
         email: user.email
     })
 
-    return { token }
+    return { accessToken, refreshToken }
 }

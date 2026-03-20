@@ -13,7 +13,7 @@ const app = express();
 // 1. Security & Parsing Middleware (Runs on every request)
 app.use(helmet());
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: 'http://localhost:3300',
     credentials: true
 }));
 app.use(rateLimit({

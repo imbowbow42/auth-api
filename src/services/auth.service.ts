@@ -10,11 +10,13 @@ export const loginService = async (data: any) => {
     if (!user) {
         throw new AppError('Invalid email or password', 401);
     }
-    if (user.password) {
-        const isPasswordValid = await comparePassword(data.password, user.password);
-        if (!isPasswordValid) {
-            throw new AppError('Invalid email or password', 401);
-        }
+    if (!user.password) {
+        throw new AppError('Invalid email or password', 401);
+    }
+    
+    const isPasswordValid = await comparePassword(data.password, user.password);
+    if (!isPasswordValid) {
+        throw new AppError('Invalid email or password', 401);
     }
 
     return {

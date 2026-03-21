@@ -4,6 +4,6 @@ import { getProfile } from '../controllers/user.controller.js'
 
 const router = Router()
 
-router.post('/profile', authMiddleware, getProfile)
+router.get('/profile', authMiddleware, getProfile)
 
 export default router

@@ -2,6 +2,10 @@
 
 A robust authentication API built with Express.js and TypeScript, designed to handle user registration, standard email/password login, and third-party Google authentication. It connects to Azure Cosmos DB for data storage and implements modern security practices.
 
+### 🌐 Live Frontend Application
+This backend serves as the core authentication service for our client application. You can view and interact with the paired frontend here: 
+**[https://kind-ocean-06f7e6b00.4.azurestaticapps.net](https://kind-ocean-06f7e6b00.4.azurestaticapps.net)**
+
 ## Features
 
 - **User Authentication:** Registration and standard login using `bcrypt` for secure password hashing.

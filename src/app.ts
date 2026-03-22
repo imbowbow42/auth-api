@@ -13,7 +13,8 @@ const app = express();
 // 1. Security & Parsing Middleware (Runs on every request)
 app.use(helmet());
 app.use(cors({
-    origin: ['http://localhost:3300', 'https://kind-ocean-06f7e6b00.4.azurestaticapps.net', 'https://login-api.jettpham.cloud'],
+    origin: ['http://localhost:3300', 'https://kind-ocean-06f7e6b00.4.azurestaticapps.net', 
+        'https://login-api.jettpham.cloud', 'https://jettpham.cloud', 'https://jett-authapi.azurewebsites.net'],
     credentials: true
 }));
 app.use(rateLimit({

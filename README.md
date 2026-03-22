@@ -4,7 +4,7 @@ A robust authentication API built with Express.js and TypeScript, designed to ha
 
 ### 🌐 Live Frontend Application
 This backend serves as the core authentication service for our client application. You can view and interact with the paired frontend here: 
-**[https://kind-ocean-06f7e6b00.4.azurestaticapps.net](https://kind-ocean-06f7e6b00.4.azurestaticapps.net)**
+**[https://login-api.jettpham.cloud](https://login-api.jettpham.cloud)**
 
 ## Features
 
